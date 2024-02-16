@@ -1,7 +1,8 @@
 import React from 'react';
-import {Linking, View} from 'react-native';
+import {Linking} from 'react-native';
 import {IconButton, Tooltip} from 'react-native-paper';
 import {styles} from '../theme/styles';
+import Row from './Row';
 
 type SocialsIcon = {
   size?: number;
@@ -17,7 +18,7 @@ type SocialsProps = {
 
 function Socials({buttons}: SocialsProps): React.JSX.Element {
   return (
-    <View style={styles.socialContainer}>
+    <Row style={styles.socialContainer}>
       {buttons.map((button, index) => {
         const size = button.size ? button.size : 24;
 
@@ -32,7 +33,7 @@ function Socials({buttons}: SocialsProps): React.JSX.Element {
           </Tooltip>
         );
       })}
-    </View>
+    </Row>
   );
 }
 

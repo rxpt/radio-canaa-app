@@ -11,6 +11,7 @@ import dateFns from 'date-fns';
 import NetInfo from '@react-native-community/netinfo';
 import {setupPlayer, playRadio, stopRadio} from '../services';
 import {styles, theme} from '../theme/styles';
+import Row from './Row';
 
 function Player(): React.JSX.Element {
   const [timerPickerVisible, setTimerPickerVisible] = React.useState(false);
@@ -38,7 +39,7 @@ function Player(): React.JSX.Element {
 
   return (
     <View>
-      <View style={styles.controlContainer}>
+      <Row style={styles.controlContainer}>
         {/* Volume - */}
         <IconButton
           icon="timer"
@@ -87,9 +88,8 @@ function Player(): React.JSX.Element {
             Alert.alert('Compartilhar', 'Em breve você poderá compartilhar');
           }}
         />
-      </View>
-      {/* Volume Slider */}
-      <View style={styles.volumeContainer}>
+      </Row>
+      <Row style={styles.volumeContainer}>
         <MaterialIcons
           name="volume-up"
           size={20}
@@ -106,8 +106,7 @@ function Player(): React.JSX.Element {
           maximumTrackTintColor={theme.colors.tertiary}
           thumbTintColor={theme.colors.primary}
         />
-      </View>
-      {/* Timer Picker */}
+      </Row>
       <TimerPickerModal
         visible={timerPickerVisible}
         setIsVisible={setTimerPickerVisible}
