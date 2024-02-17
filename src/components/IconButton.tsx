@@ -30,7 +30,7 @@ const AnimatedTouchableOpacity =
 function IconButton({
   icon,
   color,
-  size = 24,
+  size = 28,
   children,
   onPress,
   disabled,

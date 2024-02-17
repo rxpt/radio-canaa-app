@@ -66,11 +66,13 @@ export const styles = StyleSheet.create({
   },
   cardTitle: {
     ...theme.fonts.titleLarge,
+    color: theme.colors.onBackground,
     textAlign: 'center',
     width: '100%',
   },
   cardSubtitle: {
     ...theme.fonts.bodySmall,
+    color: theme.colors.onBackground,
     textAlign: 'center',
   },
 });
