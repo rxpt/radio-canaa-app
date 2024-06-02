@@ -21,23 +21,27 @@ type IconButtonProps = {
   animated?: boolean;
   gradient?: LinearGradientProps;
   style?: ViewStyle | ViewStyle[];
+  accessibilityLabel?: string;
 };
 
 const AnimatedIcon = Animated.createAnimatedComponent(Icon);
 const AnimatedTouchableOpacity =
   Animated.createAnimatedComponent(TouchableOpacity);
 
-function IconButton({
-  icon,
-  color,
-  size = 28,
-  children,
-  onPress,
-  disabled,
-  animated,
-  gradient,
-  style,
-}: IconButtonProps): React.JSX.Element {
+function IconButton(props: IconButtonProps): React.JSX.Element {
+  const {
+    icon,
+    color,
+    size = 28,
+    children,
+    onPress,
+    disabled,
+    animated,
+    gradient,
+    style,
+    ...rest
+  } = props;
+  const iconColor = color || theme.colors.onPrimary;
   const rotate = useSharedValue(0);
 
   const handlePress = () => {
@@ -51,10 +55,6 @@ function IconButton({
     };
   });
 
-  if (!color) {
-    color = theme.colors.onBackground;
-  }
-
   return (
     <AnimatedTouchableOpacity
       onPress={handlePress}
@@ -64,7 +64,8 @@ function IconButton({
         disabled && styles.disabled,
         animated && animatedStyle,
         style,
-      ]}>
+      ]}
+      {...rest}>
       {gradient && gradient.colors && (
         <LinearGradient
           colors={gradient?.colors}
@@ -76,7 +77,7 @@ function IconButton({
       <AnimatedIcon
         name={icon}
         size={size}
-        color={color}
+        color={iconColor}
         style={animated && animatedStyle}
       />
       {children}

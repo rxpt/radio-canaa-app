@@ -30,6 +30,7 @@ function Socials({buttons}: SocialsProps): React.JSX.Element {
               iconColor={theme.colors.primary}
               onPress={() => button.url && Linking.openURL(button.url)}
               disabled={button.disabled}
+              accessibilityLabel={button.name}
             />
           </Tooltip>
         );

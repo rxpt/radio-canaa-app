@@ -1,7 +1,10 @@
 import React from 'react';
 import {Alert, View, ToastAndroid} from 'react-native';
 import BackgroundTimer from 'react-native-background-timer';
-import TrackPlayer, {useIsPlaying} from 'react-native-track-player';
+import TrackPlayer, {
+  useIsPlaying,
+  useProgress,
+} from 'react-native-track-player';
 import {TimerPickerModal} from 'react-native-timer-picker';
 import Slider from '@react-native-community/slider';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -17,6 +20,8 @@ function Player(): React.JSX.Element {
   const [timerPickerVisible, setTimerPickerVisible] = React.useState(false);
   const [playerIsSetup, setPlayerIsSetup] = React.useState(false);
   const [currVolume, setCurrVolume] = React.useState(0);
+  const {duration, buffered} = useProgress();
+  const isBuffering = buffered < duration;
   const {playing: isPlaying} = useIsPlaying();
 
   React.useEffect(() => {
@@ -48,6 +53,7 @@ function Player(): React.JSX.Element {
             setTimerPickerVisible(true);
           }}
           disabled={currVolume <= 0}
+          accessibilityLabel="Timer de desligamento"
         />
         {/* Play/Pause */}
         <IconButton
@@ -58,7 +64,7 @@ function Player(): React.JSX.Element {
             end: {x: 1, y: 1},
           }}
           color={theme.colors.background}
-          icon={isPlaying ? 'pause' : 'play'}
+          icon={isBuffering ? 'sync' : isPlaying ? 'pause' : 'play'}
           size={60}
           onPress={() => {
             if (isPlaying) {
@@ -79,6 +85,7 @@ function Player(): React.JSX.Element {
           }}
           disabled={!playerIsSetup}
           style={styles.controlButton}
+          accessibilityLabel={isPlaying ? 'Pausar' : 'Reproduzir'}
         />
         {/* Volume + */}
         <IconButton
@@ -87,6 +94,7 @@ function Player(): React.JSX.Element {
           onPress={() => {
             Alert.alert('Compartilhar', 'Em breve você poderá compartilhar');
           }}
+          accessibilityLabel="Compartilhar"
         />
       </Row>
       <Row style={styles.volumeContainer}>
@@ -105,6 +113,7 @@ function Player(): React.JSX.Element {
           minimumTrackTintColor={theme.colors.secondary}
           maximumTrackTintColor={theme.colors.tertiary}
           thumbTintColor={theme.colors.primary}
+          accessibilityLabel="Volume"
         />
       </Row>
       <TimerPickerModal
